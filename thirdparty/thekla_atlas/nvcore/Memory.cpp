@@ -1,4 +1,4 @@
-// This code is in the public domain -- Ignacio Castaño <castano@gmail.com>
+// This code is in the public domain -- Ignacio CastaÃ±o <castano@gmail.com>
 
 #include "Memory.h"
 #include "Debug.h"
@@ -6,7 +6,7 @@
 
 #include <stdlib.h>
 
-#ifdef NV_OS_LINUX
+#if NV_OS_LINUX && !(NV_OS_FREEBSD || NV_OS_OPENBSD)
 #include <malloc.h>
 #endif
 
@@ -130,7 +130,7 @@ void * nv::aligned_malloc(size_t size, size_t alignment)
 
 #if NV_OS_WIN32 || NV_OS_DURANGO
     return _aligned_malloc(size, alignment);
-#elif NV_OS_DARWIN && !NV_OS_IOS
+#elif (NV_OS_DARWIN || NV_OS_FREEBSD || NV_OS_OPENBSD) && !NV_OS_IOS
     void * ptr = NULL;
     posix_memalign(&ptr, alignment, size);
     return ptr;
