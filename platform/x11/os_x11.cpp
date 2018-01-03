@@ -2473,6 +2473,10 @@ OS_X11::OS_X11() {
 	AudioDriverManager::add_driver(&driver_pulseaudio);
 #endif
 
+#ifdef OSS_ENABLED
+	AudioDriverManager::add_driver(&driver_oss);
+#endif
+
 #ifdef ALSA_ENABLED
 	AudioDriverManager::add_driver(&driver_alsa);
 #endif

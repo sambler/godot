@@ -37,6 +37,7 @@
 #include "servers/visual_server.h"
 //#include "servers/visual/visual_server_wrap_mt.h"
 #include "drivers/alsa/audio_driver_alsa.h"
+#include "drivers/oss/audio_driver_oss.h"
 #include "drivers/pulseaudio/audio_driver_pulseaudio.h"
 #include "drivers/rtaudio/audio_driver_rtaudio.h"
 #include "joypad_linux.h"
@@ -161,6 +162,10 @@ class OS_X11 : public OS_Unix {
 
 #ifdef ALSA_ENABLED
 	AudioDriverALSA driver_alsa;
+#endif
+
+#ifdef OSS_ENABLED
+	AudioDriverOSS driver_oss;
 #endif
 
 #ifdef PULSEAUDIO_ENABLED
