@@ -38,10 +38,18 @@ const char *AudioDriverRtAudio::get_name() const {
 
 #ifdef OSX_ENABLED
 	return "RtAudio-OSX";
-#elif defined(UNIX_ENABLED)
-	return "RtAudio-ALSA";
+#elif defined(UNIX_ENABLED) && (defined(ALSA_ENABLED) || defined(PULSEAUDIO_ENABLED) || defined(OSS_ENABLED))
+
+#if defined(OSS_ENABLED)
+	return "RtAudio-OSS";
+#elif defined(ALSA_ENABLED)
+    return "RtAudio-ALSA";
+#elif defined(PULSEAUDIO_ENABLED)
+	return "RtAudio-PulseAudio";
 #elif defined(WINDOWS_ENABLED)
 	return "RtAudio-DirectSound";
+#endif
+
 #else
 	return "RtAudio-None";
 #endif

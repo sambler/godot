@@ -2465,6 +2465,10 @@ OS::LatinKeyboardVariant OS_X11::get_latin_keyboard_variant() const {
 
 OS_X11::OS_X11() {
 
+#ifdef RTAUDIO_ENABLED
+	AudioDriverManager::add_driver(&driver_rtaudio);
+#endif
+
 #ifdef PULSEAUDIO_ENABLED
 	AudioDriverManager::add_driver(&driver_pulseaudio);
 #endif
