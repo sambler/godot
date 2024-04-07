@@ -175,10 +175,9 @@ String OS_LinuxBSD::get_processor_name() const {
 	char buf[4096];
 	memset(buf, 0, sizeof(buf));
 	size_t len = sizeof(buf) - 1;
-	if (sysctl(mib, 2, buf, &len, 0x0, 0) == -1) {
-		return String();
+	if (sysctl(mib, 2, buf, &len, 0x0, 0) != -1) {
+		return String(buf);
 	}
-	return String(buf);
 #else
 	Ref<FileAccess> f = FileAccess::open("/proc/cpuinfo", FileAccess::READ);
 	ERR_FAIL_COND_V_MSG(f.is_null(), "", String("Couldn't open `/proc/cpuinfo` to get the CPU model name. Returning an empty string."));
@@ -191,7 +190,7 @@ String OS_LinuxBSD::get_processor_name() const {
 	}
 #endif
 
-	ERR_FAIL_V_MSG("", String("Couldn't get the CPU model name from `/proc/cpuinfo`. Returning an empty string."));
+	ERR_FAIL_V_MSG("", String("Couldn't get the CPU model. Returning an empty string."));
 }
 
 bool OS_LinuxBSD::is_sandboxed() const {
